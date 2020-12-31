@@ -58,4 +58,4 @@ public class HomeController : Controller
 ##### NewIds  
 `List<long> NewIds(int count);`
 
-生成指定个数哥ID。  
+生成指定个数的ID。  

@@ -1,5 +1,5 @@
 # OnceMi.AspNetCore.IdGenerator
-ASP.NET Core雪花算法分布式ID生成工具。Use https://github.com/RobThree/IdGen
+ASP.NET Core雪花算法分布式ID生成工具。Use https://gitee.com/yitter/idgenerator
 
 # How to use
 1、Install OnceMi.AspNetCore.IdGenerator。  
@@ -16,11 +16,11 @@ You need to configure OSSService in your Startup.cs：
 ```csharp
 services.AddIdGenerator(x =>
 {
-    x.AppId = 0;   //Between 0-1024
+    x.AppId = 1;   //Between 1-1023
 });
 ```
 
-在使用过程中保证每个IdGenerator一个AppId，Appid范围为0-1023。  
+在使用过程中保证每个IdGenerator一个AppId，Appid范围为1-1023。  
 
 3、Use  
 ```csharp

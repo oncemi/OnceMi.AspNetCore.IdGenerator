@@ -26,7 +26,7 @@ namespace IdGeneratorSample
             services.AddIdGenerator(x =>
             {
                 string appIdStr = Configuration["AppSettings:AppId"];
-                if (!int.TryParse(appIdStr, out int appid))
+                if (!ushort.TryParse(appIdStr, out ushort appid))
                 {
                     throw new Exception("Please config appid in 'appsettings.json'");
                 }

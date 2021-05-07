@@ -3,12 +3,13 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Yitter.IdGenerator;
 
 namespace OnceMi.AspNetCore.IdGenerator
 {
     public class IdGeneratorService : IIdGeneratorService
     {
-        private readonly IdGen.IdGenerator _generator;
+        private readonly IIdGenerator _generator;
         private readonly IdGeneratorOption _option;
         private readonly ILogger<IdGeneratorService> _logger;
 
@@ -19,56 +20,62 @@ namespace OnceMi.AspNetCore.IdGenerator
             //create
             if (_option.GeneratorOptions != null)
             {
-                _generator = new IdGen.IdGenerator(_option.AppId, _option.GeneratorOptions);
+                _option.GeneratorOptions.WorkerId = _option.AppId;
+                if (_option.GeneratorOptions.WorkerId > Math.Pow(2, _option.GeneratorOptions.WorkerIdBitLength) - 1)
+                {
+                    throw new Exception($"WorkerId must lesss than {Math.Pow(2, _option.GeneratorOptions.WorkerIdBitLength) - 1}");
+                }
+                _generator = new DefaultIdGenerator(_option.GeneratorOptions);
             }
             else
             {
-                _generator = new IdGen.IdGenerator(_option.AppId);
+                var options = new IdGeneratorOptions()
+                {
+                    Method = 1,
+                    WorkerId = _option.AppId,
+                    WorkerIdBitLength = 10,
+                    SeqBitLength = 6,
+                    TopOverCostCount = 2000,
+                };
+                if (options.WorkerId > Math.Pow(2, options.WorkerIdBitLength) - 1)
+                {
+                    throw new Exception($"WorkerId must lesss than {Math.Pow(2, options.WorkerIdBitLength) - 1}");
+                }
+                _generator = new DefaultIdGenerator(options);
             }
         }
 
+        /// <summary>
+        /// 生成新的Id
+        /// </summary>
+        /// <returns></returns>
         public long NewId()
         {
             if (_generator == null)
             {
                 throw new Exception("Object is not init.");
             }
-            while (true)
-            {
-                try
-                {
-                    long id = _generator.CreateId();
-                    return id;
-                }
-                catch (Exception ex)
-                {
-                    //一个时间周期中，生成的ID超过了序列限制
-                    if (!string.IsNullOrEmpty(ex.Message) 
-                        && ex.Message.Contains("sequence overflow", StringComparison.OrdinalIgnoreCase))
-                    {
-                        _logger.LogWarning(ex.Message, ex);
-                        continue;
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-            }
+            long id = _generator.NewLong();
+            return id;
         }
 
+        /// <summary>
+        /// 生成指定个数的Id
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public List<long> NewIds(int count)
         {
             if (_generator == null)
             {
                 throw new Exception("Object is not init.");
             }
-            var data = _generator.Take(count);
-            if (data.Count() != count)
+            long[] result = new long[count];
+            for (int i = 0; i < count; i++)
             {
-                throw new Exception($"Create {count} ids failed..");
+                result[i] = this.NewId();
             }
-            return data.ToList();
+            return result.ToList();
         }
     }
 }

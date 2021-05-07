@@ -11,7 +11,7 @@ Nuget中安装：
 在Nuget包管理器中搜索`OnceMi.AspNetCore.IdGenerator`并安装。  
 
 2、Configuration  
-You need to configure OSSService in your Startup.cs：
+You need to configure IdGenerator in your Startup.cs：
 
 ```csharp
 services.AddIdGenerator(x =>

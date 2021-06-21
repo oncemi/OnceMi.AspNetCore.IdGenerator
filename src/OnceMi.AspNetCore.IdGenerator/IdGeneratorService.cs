@@ -28,7 +28,7 @@ namespace OnceMi.AspNetCore.IdGenerator
                 {
                     Method = 1,
                     WorkerId = _option.AppId,
-                    WorkerIdBitLength = 10,
+                    WorkerIdBitLength = 6,
                     SeqBitLength = 6,
                     TopOverCostCount = 2000,
                     BaseTime = DateTime.Parse("2021-01-01 00:00:00")
@@ -36,7 +36,7 @@ namespace OnceMi.AspNetCore.IdGenerator
             }
             if (_option.GeneratorOptions.WorkerId > Math.Pow(2, _option.GeneratorOptions.WorkerIdBitLength) - 1)
             {
-                throw new Exception($"WorkerId must lesss than {Math.Pow(2, _option.GeneratorOptions.WorkerIdBitLength) - 1}");
+                throw new Exception($"App Id must be between 0-{Math.Pow(2, _option.GeneratorOptions.WorkerIdBitLength) - 1}.");
             }
             if (DateTime.Now < _option.GeneratorOptions.BaseTime)
             {

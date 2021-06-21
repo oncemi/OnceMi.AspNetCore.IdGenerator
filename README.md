@@ -2,51 +2,50 @@
 ASP.NET Core雪花算法分布式ID生成工具。Use https://github.com/yitter/IdGenerator
 
 # How to use
-1、Install OnceMi.AspNetCore.IdGenerator。  
-CLI中安装：  
-```shell
-dotnet add package OnceMi.AspNetCore.IdGenerator
-```
-Nuget中安装：  
-在Nuget包管理器中搜索`OnceMi.AspNetCore.IdGenerator`并安装。  
+1. Install OnceMi.AspNetCore.IdGenerator。  
+    CLI中安装：  
+    ```shell
+    dotnet add package OnceMi.AspNetCore.IdGenerator
+    ```
+    Nuget中安装：  [![](https://img.shields.io/nuget/v/OnceMi.AspNetCore.IdGenerator.svg)](https://www.nuget.org/packages/OnceMi.AspNetCore.IdGenerator)
 
-2、Configuration  
-You need to configure IdGenerator in your Startup.cs：
+2. Configuration  
+    You need to configure IdGenerator in your Startup.cs：
 
-```csharp
-services.AddIdGenerator(x =>
-{
-    x.AppId = 1;   //Between 0-63
-});
-```
-
-在使用过程中保证每个IdGenerator一个AppId，Appid范围为0-63，如果超过64个应用，可自定义Option（默认Option WorkId为6位）。  
-
-3、Use  
-```csharp
-public class HomeController : Controller
-{
-    private readonly ILogger<HomeController> _logger;
-    private readonly IIdGeneratorService _idGenerator;
-
-    public HomeController(ILogger<HomeController> logger, IIdGeneratorService idGenerator)
+    ```csharp
+    services.AddIdGenerator(x =>
     {
-        _logger = logger;
-        _idGenerator = idGenerator;
-    }
+        x.AppId = 1;   //Between 0-63
+    });
+    ```
 
-    public IActionResult Index()
+    在使用过程中保证每个IdGenerator一个AppId，Appid范围为0-63，如果超过64个应用，可自定义Option（默认Option WorkId为6位）。  
+
+3. Use  
+    ```csharp
+    public class HomeController : Controller
     {
-        List<long> ids = new List<long>();
-        for (int i = 0; i < 5; i++)
+        private readonly ILogger<HomeController> _logger;
+        private readonly IIdGeneratorService _idGenerator;
+
+        public HomeController(ILogger<HomeController> logger, IIdGeneratorService idGenerator)
         {
-            ids.Add(_idGenerator.NewId());
+            _logger = logger;
+            _idGenerator = idGenerator;
         }
-        ViewBag.Ids = ids;
-        return View();
+
+        public IActionResult Index()
+        {
+            List<long> ids = new List<long>();
+            for (int i = 0; i < 5; i++)
+            {
+                ids.Add(_idGenerator.NewId());
+            }
+            ViewBag.Ids = ids;
+            return View();
+        }
     }
-}
-```
+    ```
 
 ### API Reference
 

@@ -16,11 +16,11 @@ You need to configure IdGenerator in your Startup.cs：
 ```csharp
 services.AddIdGenerator(x =>
 {
-    x.AppId = 1;   //Between 1-1023
+    x.AppId = 1;   //Between 0-63
 });
 ```
 
-在使用过程中保证每个IdGenerator一个AppId，Appid范围为1-1023。  
+在使用过程中保证每个IdGenerator一个AppId，Appid范围为0-63，如果超过64个应用，可自定义Option（默认Option WorkId为6位）。  
 
 3、Use  
 ```csharp
@@ -56,7 +56,7 @@ public class HomeController : Controller
 生成一个ID。  
 
 ##### NewIds  
-`List<long> NewIds(int count);`
+`long[] NewIds(int count);`
 
 生成指定个数的ID。  
 

@@ -9,6 +9,6 @@ namespace OnceMi.AspNetCore.IdGenerator
     {
         long NewId();
 
-        List<long> NewIds(int count);
+        long[] NewIds(int count);
     }
 }

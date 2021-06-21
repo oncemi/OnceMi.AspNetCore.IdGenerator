@@ -21,28 +21,28 @@ namespace OnceMi.AspNetCore.IdGenerator
             if (_option.GeneratorOptions != null)
             {
                 _option.GeneratorOptions.WorkerId = _option.AppId;
-                if (_option.GeneratorOptions.WorkerId > Math.Pow(2, _option.GeneratorOptions.WorkerIdBitLength) - 1)
-                {
-                    throw new Exception($"WorkerId must lesss than {Math.Pow(2, _option.GeneratorOptions.WorkerIdBitLength) - 1}");
-                }
-                _generator = new DefaultIdGenerator(_option.GeneratorOptions);
             }
             else
             {
-                var options = new IdGeneratorOptions()
+                _option.GeneratorOptions = new IdGeneratorOptions()
                 {
                     Method = 1,
                     WorkerId = _option.AppId,
                     WorkerIdBitLength = 10,
                     SeqBitLength = 6,
                     TopOverCostCount = 2000,
+                    BaseTime = DateTime.Parse("2021-01-01 00:00:00")
                 };
-                if (options.WorkerId > Math.Pow(2, options.WorkerIdBitLength) - 1)
-                {
-                    throw new Exception($"WorkerId must lesss than {Math.Pow(2, options.WorkerIdBitLength) - 1}");
-                }
-                _generator = new DefaultIdGenerator(options);
             }
+            if (_option.GeneratorOptions.WorkerId > Math.Pow(2, _option.GeneratorOptions.WorkerIdBitLength) - 1)
+            {
+                throw new Exception($"WorkerId must lesss than {Math.Pow(2, _option.GeneratorOptions.WorkerIdBitLength) - 1}");
+            }
+            if (DateTime.Now < _option.GeneratorOptions.BaseTime)
+            {
+                throw new Exception("The system time is incorrect.");
+            }
+            _generator = new DefaultIdGenerator(_option.GeneratorOptions);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace OnceMi.AspNetCore.IdGenerator
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
-        public List<long> NewIds(int count)
+        public long[] NewIds(int count)
         {
             if (_generator == null)
             {
@@ -75,7 +75,7 @@ namespace OnceMi.AspNetCore.IdGenerator
             {
                 result[i] = this.NewId();
             }
-            return result.ToList();
+            return result;
         }
     }
 }

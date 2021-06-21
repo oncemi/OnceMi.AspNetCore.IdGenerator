@@ -139,24 +139,6 @@ namespace Yitter.IdGenerator
             });
         }
 
-        private void BeginOverCostAction(in long useTimeTick)
-        {
-            return;
-
-            //if (GenAction == null)
-            //{
-            //    return;
-            //}
-
-            //DoGenIdAction(new OverCostActionArg(
-            //    WorkerId,
-            //    useTimeTick,
-            //    1,
-            //    _OverCostCountInOneTerm,
-            //    _GenCountInOneTerm,
-            //    _TermIndex));
-        }
-
         private void EndOverCostAction(in long useTimeTick)
         {
             if (_TermIndex > 10000)
@@ -165,54 +147,54 @@ namespace Yitter.IdGenerator
             }
             return;
 
-            //if (GenAction == null)
-            //{
-            //    return;
-            //}
+            if (GenAction == null)
+            {
+                return;
+            }
 
-            //DoGenIdAction(new OverCostActionArg(
-            //    WorkerId,
-            //    useTimeTick,
-            //    2,
-            //    _OverCostCountInOneTerm,
-            //    _GenCountInOneTerm,
-            //    _TermIndex));
+            DoGenIdAction(new OverCostActionArg(
+                WorkerId,
+                useTimeTick,
+                2,
+                _OverCostCountInOneTerm,
+                _GenCountInOneTerm,
+                _TermIndex));
         }
 
         private void BeginTurnBackAction(in long useTimeTick)
         {
             return;
 
-            //if (GenAction == null)
-            //{
-            //    return;
-            //}
+            if (GenAction == null)
+            {
+                return;
+            }
 
-            //DoGenIdAction(new OverCostActionArg(
-            //WorkerId,
-            //useTimeTick,
-            //8,
-            //0,
-            //0,
-            //_TurnBackIndex));
+            DoGenIdAction(new OverCostActionArg(
+            WorkerId,
+            useTimeTick,
+            8,
+            0,
+            0,
+            _TurnBackIndex));
         }
 
         private void EndTurnBackAction(in long useTimeTick)
         {
             return;
 
-            //if (GenAction == null)
-            //{
-            //    return;
-            //}
+            if (GenAction == null)
+            {
+                return;
+            }
 
-            //DoGenIdAction(new OverCostActionArg(
-            //WorkerId,
-            //useTimeTick,
-            //9,
-            //0,
-            //0,
-            //_TurnBackIndex));
+            DoGenIdAction(new OverCostActionArg(
+            WorkerId,
+            useTimeTick,
+            9,
+            0,
+            0,
+            _TurnBackIndex));
         }
 
         private long NextOverCostId()
@@ -304,8 +286,6 @@ namespace Yitter.IdGenerator
 
             if (_CurrentSeqNumber > MaxSeqNumber)
             {
-                BeginOverCostAction(currentTimeTick);
-
                 _TermIndex++;
                 _LastTimeTick++;
                 _CurrentSeqNumber = MinSeqNumber;

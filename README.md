@@ -1,5 +1,5 @@
 # OnceMi.AspNetCore.IdGenerator
-ASP.NET Core雪花算法分布式ID生成工具。Use https://gitee.com/yitter/idgenerator
+ASP.NET Core雪花算法分布式ID生成工具。Use https://github.com/yitter/IdGenerator
 
 # How to use
 1、Install OnceMi.AspNetCore.IdGenerator。  

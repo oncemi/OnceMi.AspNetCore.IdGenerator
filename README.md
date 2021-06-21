@@ -59,3 +59,8 @@ public class HomeController : Controller
 `List<long> NewIds(int count);`
 
 生成指定个数的ID。  
+
+
+### Features
+
+Please visit https://github.com/yitter/IdGenerator

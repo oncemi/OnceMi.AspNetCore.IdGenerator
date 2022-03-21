@@ -23,17 +23,12 @@ namespace IdGeneratorSample
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Add id generator
             services.AddIdGenerator(x =>
             {
-                string appIdStr = Configuration["AppSettings:AppId"];
-                if (!ushort.TryParse(appIdStr, out ushort appid))
-                {
-                    throw new Exception("Please config appid in 'appsettings.json'");
-                }
-
-                x.AppId = appid;
+                x.AppId = Configuration.GetValue<ushort>("AppSettings:AppId");
             });
-
+            //Add mvc
             services.AddControllersWithViews();
         }
 

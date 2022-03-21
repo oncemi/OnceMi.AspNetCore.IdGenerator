@@ -38,13 +38,10 @@ namespace IdGeneratorSample.Controllers
             count = count == 0 ? 100000 : count;
             Stopwatch st = new Stopwatch();
             st.Start();
-            for (int i = 0; i < count; i++)
-            {
-                _idGenerator.NewId();
-            }
+            _idGenerator.NewIds(count);
+            st.Stop();
             ViewBag.Count = count;
             ViewBag.Time = st.ElapsedMilliseconds;
-            st.Stop();
             return View();
         }
 

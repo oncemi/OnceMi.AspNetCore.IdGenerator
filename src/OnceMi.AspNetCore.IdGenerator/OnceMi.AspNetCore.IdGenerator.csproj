@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <Authors>OnceMi</Authors>
     <Description>ASP.NET Core雪花算法分布式ID生成工具。Use https://github.com/yitter/IdGenerator</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -14,9 +14,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.2" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-    <PackageReference Include="Yitter.IdGenerator" Version="1.0.12" />
+    <PackageReference Include="Yitter.IdGenerator" Version="1.0.14" />
   </ItemGroup>
 
   <ItemGroup>

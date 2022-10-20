@@ -11,13 +11,19 @@ namespace OnceMi.AspNetCore.IdGenerator
         /// 生成一个新的Id
         /// </summary>
         /// <returns></returns>
-        long NewId();
+        long CreateId();
 
         /// <summary>
-        /// 生成指定数量的Id
+        /// 尝试生成Id
         /// </summary>
-        /// <param name="count"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        long[] NewIds(int count);
+        bool TryCreateId(out long id);
+
+        /// <summary>
+        /// 生成指定个数的Id
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<long> CreateIds(int count);
     }
 }

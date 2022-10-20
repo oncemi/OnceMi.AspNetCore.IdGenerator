@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Yitter.IdGenerator;
@@ -49,7 +50,7 @@ namespace OnceMi.AspNetCore.IdGenerator
         /// 生成新的Id
         /// </summary>
         /// <returns></returns>
-        public long NewId()
+        public long CreateId()
         {
             if (_generator == null)
             {
@@ -60,22 +61,35 @@ namespace OnceMi.AspNetCore.IdGenerator
         }
 
         /// <summary>
-        /// 生成指定个数的Id
+        /// 尝试生成Id
         /// </summary>
-        /// <param name="count"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public long[] NewIds(int count)
+        public bool TryCreateId(out long id)
         {
-            if (_generator == null)
+            id = 0;
+            try
             {
-                throw new Exception("Object is not init.");
+                id = CreateId();
+                return true;
             }
-            long[] result = new long[count];
-            for (int i = 0; i < count; i++)
+            catch
             {
-                result[i] = this.NewId();
+                return false;
             }
-            return result;
+        }
+
+        public IEnumerable<long> CreateIds(int count)
+        {
+            return Stream().Take(count);
+        }
+
+        private IEnumerable<long> Stream()
+        {
+            while (true)
+            {
+                yield return CreateId();
+            }
         }
     }
 }

@@ -27,18 +27,18 @@ namespace IdGeneratorSample.Controllers
             List<long> ids = new List<long>();
             for (int i = 0; i < 5; i++)
             {
-                ids.Add(_idGenerator.NewId());
+                ids.Add(_idGenerator.CreateId());
             }
             ViewBag.Ids = ids;
             return View();
-        }
+        } 
 
         public IActionResult TimeTest(int count)
         {
             count = count == 0 ? 100000 : count;
             Stopwatch st = new Stopwatch();
             st.Start();
-            _idGenerator.NewIds(count);
+            var vals = _idGenerator.CreateIds(count).ToArray();
             st.Stop();
             ViewBag.Count = count;
             ViewBag.Time = st.ElapsedMilliseconds;

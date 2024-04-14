@@ -32,7 +32,7 @@ namespace OnceMi.AspNetCore.IdGenerator
                     WorkerIdBitLength = 6,
                     SeqBitLength = 6,
                     TopOverCostCount = 2000,
-                    BaseTime = DateTime.Parse("2021-01-01 00:00:00")
+                    BaseTime = new DateTime(2021, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                 };
             }
             if (_option.GeneratorOptions.WorkerId > Math.Pow(2, _option.GeneratorOptions.WorkerIdBitLength) - 1)
